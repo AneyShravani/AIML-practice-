@@ -1,0 +1,52 @@
+1 - 
+# Graph using adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+
+# Breadth First Search
+def bfs(graph, start, goal):
+    queue = [[start]]
+    visited = set()
+
+    while queue:
+        path = queue.pop(0)
+        node = path[-1]
+
+        if node == goal:
+            return path
+
+        if node not in visited:
+            visited.add(node)
+            for neighbour in graph[node]:
+                new_path = list(path)
+                new_path.append(neighbour)
+                queue.append(new_path)
+
+# Depth First Search
+def dfs(graph, start, goal, path=[]):
+    path = path + [start]
+
+    if start == goal:
+        return path
+
+    for neighbour in graph[start]:
+        if neighbour not in path:
+            new_path = dfs(graph, neighbour, goal, path)
+            if new_path:
+                return new_path
+
+
+start = input("Enter start node: ")
+goal = input("Enter goal node: PS 2 :- 
+A robot moves in a city map where each move has a cost (e.g., traffic or terrain). The goal is to find the lowest cost path to the destination using A search*, combining actual cost and heuristic (distance).
+
+print("BFS Path:", bfs(graph, start, goal))
+print("DFS Path:", dfs(graph, start, goal))
+
+2 - 
