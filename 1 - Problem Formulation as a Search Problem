@@ -1,0 +1,114 @@
+1 :
+# Simple Reflex Agent for Smart Light System
+def smart_light_agent(outside_light, human_present):
+    
+    # Condition–Action Rules
+    if human_present == "yes" and outside_light == "no":
+        action = "Light ON"
+    else:
+        action = "Light OFF"
+    
+    return action
+# Taking input from user
+outside_light = input("Is outside light available? (yes/no): ").lower()
+human_present = input("Is a human present in the room? (yes/no): ").lower()
+# Agent decision
+result = smart_light_agent(outside_light, human_present)
+print("Agent Action:", result)
+
+2 :
+# Two-Room Vacuum Cleaner Agent
+
+# Initial room status
+roomA = input("Enter status of Room A (clean/dirty): ").lower()
+roomB = input("Enter status of Room B (clean/dirty): ").lower()
+
+location = "A"   # Agent starts in Room A
+
+while True:
+    print("\nAgent Location:", location)
+
+    if location == "A":
+        if roomA == "dirty":
+            print("Room A is dirty -> Cleaning...")
+            roomA = "clean"
+        else:
+            print("Room A is clean -> Moving to Room B")
+            location = "B"
+
+    elif location == "B":
+        if roomB == "dirty":
+            print("Room B is dirty -> Cleaning...")
+            roomB = "clean"
+        else:
+            print("Room B is clean -> Moving to Room A")
+            location = "A"
+
+    # Stop when both rooms are clean
+    if roomA == "clean" and roomB == "clean":
+        print("\nBoth rooms are clean. Task completed!")
+        break
+
+3 :
+# 8 Puzzle Problem - Simple Simulation
+
+# Initial state
+initial = [
+    [1, 2, 3],
+    [4, 0, 6],
+    [7, 5, 8]
+]
+
+# Goal state
+goal = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 0]
+]
+
+# Function to print puzzle
+def print_puzzle(state):
+    for row in state:
+        print(row)
+    print()
+
+# Find blank position
+def find_blank(state):
+    for i in range(3):
+        for j in range(3):
+            if state[i][j] == 0:
+                return i, j
+
+# Move blank
+def move(state, direction):
+    i, j = find_blank(state)
+    new_state = [row[:] for row in state]
+
+    if direction == "up" and i > 0:
+        new_state[i][j], new_state[i-1][j] = new_state[i-1][j], new_state[i][j]
+
+    elif direction == "down" and i < 2:
+        new_state[i][j], new_state[i+1][j] = new_state[i+1][j], new_state[i][j]
+
+    elif direction == "left" and j > 0:
+        new_state[i][j], new_state[i][j-1] = new_state[i][j-1], new_state[i][j]
+
+    elif direction == "right" and j < 2:
+        new_state[i][j], new_state[i][j+1] = new_state[i][j+1], new_state[i][j]
+
+    return new_state
+
+
+state = initial
+print("Initial State:")
+print_puzzle(state)
+
+# Simple moves to reach goal
+state = move(state, "down")
+state = move(state, "right")
+
+print("Final State:")
+print_puzzle(state)
+
+if state == goal:
+    print("Goal State Reached!")
